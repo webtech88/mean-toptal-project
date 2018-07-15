@@ -1,0 +1,17 @@
+.create-timezone-form {
+    padding: 20px;
+    box-shadow: 0px 0px 13px 2px rgba(206, 199, 199, 0.5);
+
+    .help-block {
+        font-size: 0.8rem;
+        color: red;
+    }  
+}
+
+.pac-container:after {
+    /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+
+    background-image: none !important;
+    height: 0px;
+    content:none !important;
+}

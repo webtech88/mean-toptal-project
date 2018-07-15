@@ -1,0 +1,17 @@
+<div class="row justify-content-md-center">
+  
+  <div class="col-md-auto mt-5">
+    <div class="alert alert-success" role="alert">
+      {{verifyString}}
+    </div>
+  </div>
+  
+</div>
+
+<div *ngIf="verified" class="row justify-content-md-center">
+  
+  <div class="col-md-auto mt-1">
+    <button [routerLink]="['/login']" class="btn btn-success">To Login</button>
+  </div>
+  
+</div>

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Piao's TTP</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngIf="currentUser">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+      </li>
+      <li class="nav-item" *ngIf="currentUser && currentUser.type!='user'">
+        <a class="nav-link" routerLink="/users" routerLinkActive="active-link">Users</a>
+      </li>
+      <li class="nav-item" *ngIf="currentUser && currentUser.type=='admin'">
+          <a class="nav-link" routerLink="/timezones" routerLinkActive="active-link">Timezones</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav navbar-right">
+      <li *ngIf="isUserAuthorized" class="dropdown" dropdown>
+        <a dropdownToggle id="dropdownMenu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <img *ngIf="currentUser.photo" [src]="currentUser.photo" width="25" alt=""/> {{currentUser?.firstName}} <span class="caret"></span>
+        </a>
+        <ul *dropdownMenu class="dropdown-menu">
+          <li role="menuitem"><a class="dropdown-item" href="javascript:void(0);" routerLink="/users/profile">My Profile</a></li>
+          <li role="menuitem"><a class="dropdown-item" href="javascript:void(0);" routerLink="/users/reset/{{currentUser._id}}">Reset Password</a></li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem"><a class="dropdown-item" id="logOut" href="javascript:void(0);" (click)="logout()">Log out</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

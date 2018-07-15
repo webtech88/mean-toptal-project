@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="create-user-form col-md-6 offset-md-4 mt-5">
+    <h2>{{ userId ? 'Edit User' : 'New User' }}</h2>
+    <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !first_name.valid }">
+        <label for="name">First Name</label>
+        <input type="text" class="form-control" name="first_name" [(ngModel)]="user.firstName" #first_name="ngModel" required />
+        <div *ngIf="f.submitted && first_name.errors?.required" class="help-block">First Name is required.</div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !last_name.valid }">
+          <label for="name">Last Name</label>
+          <input type="text" class="form-control" name="last_name" [(ngModel)]="user.lastName" #last_name="ngModel" required />
+          <div *ngIf="f.submitted && last_name.errors?.required" class="help-block">Last Name is required.</div>
+        </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" required email />
+        <div *ngIf="f.submitted && email.errors?.email" class="help-block">Email is not valid.</div>
+      </div>
+      <ng-container *ngIf="!userId">
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required minlength="8" />
+          <div *ngIf="f.submitted && password.errors?.required" class="help-block">Password is required.</div>
+          <div *ngIf="f.submitted && password.errors?.minlength" class="help-block">Password should be greater than 8.</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !confirm_password.valid }">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" class="form-control" name="confirm_password" [(ngModel)]="user.confirm_password" #confirm_password="ngModel" [equalTo]="password" />
+          <div *ngIf="f.submitted && confirm_password.errors?.equalTo" class="help-block">Confirm Password did not match.</div>
+        </div>
+      </ng-container>
+      <div *ngIf="currentUser.type !== 'user'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !role.valid }">
+        <label for="role">Role</label>
+        <select class="form-control capital" name="role" [(ngModel)]="user.type" #role="ngModel" required>
+          <option *ngFor="let type of types" [value]="type" [selected]="type === user.type">{{type}}</option>
+        </select>
+        <div *ngIf="f.submitted && role.errors?.required" class="help-block">Role is required.</div>
+      </div>
+      <div class="form-group text-right">
+        <button [disabled]="loading" class="btn btn-success">Save</button>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <a routerLink="/users" class="btn btn-light">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+  

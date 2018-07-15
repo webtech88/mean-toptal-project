@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-sm-12 mt-5">
+      <h2 class="pull-left">Users</h2>
+      <div class="clearfix"></div>
+      <div class="form-group">
+        <label for="password">Search: </label>
+        <input type="text" name="search" (input)="onSearchChange($event.target.value)"/>
+        <div class="actions pull-right">
+            <a href="javascript:void(0);" class="btn btn-success" routerLink="/users/new">Add User</a>
+          </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="table-responsive">
+        <table class="table table-condensed users">
+          <thead>
+            <tr>
+              <th></th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Type</th>
+              <th>Verified</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers">
+              <td><img src="{{user.photo}}" width="25" alt="" /></td>
+              <td>{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.type}}</td>
+              <td *ngIf="user.status === 'active'">Verified</td>
+              <td *ngIf="user.status !== 'active'" class="red">Not Verified</td>
+              <td *ngIf="user.wrongCount >= 3">
+                <a *ngIf="user|isAllowing:currentUser" href="javascript:void(0);" class="btn btn-danger btn-sm" title="Click to restore" (click)="restoreUser(user)">Blocked</a>
+              </td>
+              <td *ngIf="user.wrongCount < 3">
+                <a *ngIf="user|isAllowing:currentUser" href="javascript:void(0);" class="btn btn-success btn-sm">Allowed</a>
+              </td>
+              <td width="1">
+                  <a *ngIf="user|isAllowing:currentUser" href="javascript:void(0);" routerLink="/users/reset/{{user._id}}" class="btn btn-secondary btn-sm"><i class="fa fa-key"></i></a>
+                </td>
+              <td width="1">
+                <a *ngIf="user|isAllowing:currentUser" href="javascript:void(0);" routerLink="/users/{{user._id}}" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a>
+              </td>
+              <td width="1">
+                <a *ngIf="user|isAllowing:currentUser" href="javascript:void(0);" class="btn btn-danger btn-sm" (click)="deleteUser(user)"><i class="fa fa-trash"></i></a>
+              </td>
+            </tr>
+            <tr *ngIf="filteredUsers.length == 0"><td colspan="10" align="center">There is no recode.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

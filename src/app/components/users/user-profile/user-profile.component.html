@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="profile-user-form col-md-6 offset-md-4 mt-5">
+      <h2>Edit My Profile</h2>
+      <form name="fileForm" (ngSubmit)="fileUpload()" enctype='multipart/form-data' #ff="ngForm" novalidate>
+          <div class="form-group">
+              <label for="photo">Photo</label>
+              <div class="image-zone">
+                <div class="profile-image">
+                  <input #fileInput type="file" class="file-input" (change)="fileChangeEvent($event)"/>
+                  <img *ngIf="user.photo" [src]="user.photo" />
+                  <div class="upload-btn" (click)="triggerFile(fileInput)">
+                    <p *ngIf="!imgLoading">{{ user.photo ? 'Change' : 'Upload' }}</p>
+                    <i *ngIf="imgLoading" class="fa fa-spinner fa-pulse fa-3x fa-fw mb-1"></i>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </form>
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !first_name.valid }">
+          <label for="name">First Name</label>
+          <input type="text" class="form-control" name="first_name" [(ngModel)]="user.firstName" #first_name="ngModel" required />
+          <div *ngIf="f.submitted && first_name.errors?.required" class="help-block">First Name is required.</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !last_name.valid }">
+            <label for="name">Last Name</label>
+            <input type="text" class="form-control" name="last_name" [(ngModel)]="user.lastName" #last_name="ngModel" required />
+            <div *ngIf="f.submitted && last_name.errors?.required" class="help-block">Last Name is required.</div>
+          </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" name="email" [(ngModel)]="user.email" #email="ngModel" [readonly]="user.email" required email />
+          <div *ngIf="f.submitted && email.errors?.email" class="help-block">Email is not valid.</div>
+        </div>
+        <div class="form-group text-right">
+          <button [disabled]="loading" class="btn btn-success">Save</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <a (click)="goPrevPage()" class="btn btn-light">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+    
